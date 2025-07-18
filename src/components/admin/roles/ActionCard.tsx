@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import { FiEdit3 } from "react-icons/fi";
+import { FiEdit3, FiSettings } from "react-icons/fi";
 import Link from "next/link";
 import hitApi from "@/lib/axios";
 import DeleteModal from "@/components/modals/DeleteModal";
@@ -20,6 +20,10 @@ const ActionCard = ({ id, refetch }: any) => {
   return (
     <div className="flex justify-center cursor-pointer text-sm font-semibold">
       <div className="flex items-start gap-6">
+        <Link href={`/admin/roles/${id}/permissions`}>
+          <FiSettings size={20} className="cursor-pointer text-secondary" />
+        </Link>
+
         <Link href={`/admin/roles/${id}`}>
           <FiEdit3 size={20} color="#0295a9" className="cursor-pointer" />
         </Link>
