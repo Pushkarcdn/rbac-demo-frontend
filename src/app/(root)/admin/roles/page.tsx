@@ -46,7 +46,7 @@ export default function Roles() {
             Roles
           </span>
 
-          <Chip text={`${roles?.length || 0} roles found`} />
+          <Chip text={`${filtered?.length || 0} roles found`} />
         </div>
         <input
           type="text"
