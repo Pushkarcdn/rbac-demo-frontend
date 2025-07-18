@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #006296;
+  --color-primary-dark: #014b73;
+  --color-primary-light: #ebf4fc;
+  --color-primary-2: #9226f6;
+  --color-primary-2-dark: #7319c2;
+  --color-primary-2-light: #dfcdfa;
+  --color-secondary: #dead00;
+  --color-secondary-dark: #b08a02;
+}
+
+@utility no-scrollbar {
+  @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+}
+
+@utility component-px {
+  @apply px-8 md:px-16 lg:px-32;
+}
+
+@utility component-py {
+  @apply py-8 lg:py-10;
+}
+
+input,
+textarea {
+  @apply border-1 border-gray-300 focus:outline-1 focus:outline-primary focus:outline-offset-0  ring-0 focus:border-transparent;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  @apply outline-none;
+}
+
+.floating-input {
+  padding-top: 20px;
+}
+
+.floating-label {
+  pointer-events: none;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: 0.2s ease all;
+}
+
+.floating-input:focus ~ .floating-label,
+.floating-input:not(:placeholder-shown) ~ .floating-label {
+  top: 0;
+  transform: translateY(-50%) scale(0.9);
+  background-color: white;
+  padding: 0 5px;
+  /* color: #8ba5ff; */
+}
+
+.floating-input:focus {
+  /* border-color: #8ba5ff; */
+}
