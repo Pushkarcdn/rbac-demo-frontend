@@ -2,12 +2,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import useFetch from "@/hooks/useFetch";
 import hitApi from "@/lib/axios";
 import Gamification from "@/components/modals/Gamification";
 import { PrimaryButton, SecondaryOutlineButton } from "@/components/ui/Buttons";
+import Loader from "@/components/ui/Loader";
 
-const NewPermission = () => {
+export default function EditComponent({ id }: { id: string }) {
   const [loading, setLoading] = useState(false);
   const [failedText, setFailedText] = useState("");
   const [successModalStatus, setSuccessModalStatus] = useState(false);
@@ -17,6 +19,8 @@ const NewPermission = () => {
   };
 
   const [formData, setFormData] = useState(defaultFormData);
+
+  const { data } = useFetch(`/permissions/${id}`) as any;
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -29,11 +33,10 @@ const NewPermission = () => {
     setLoading(true);
     setFailedText("");
 
-    const res = await hitApi("/permissions", "POST", formData);
+    const res = await hitApi(`/permissions/${id}`, "PUT", formData);
 
     if (res?.success) {
       setSuccessModalStatus(true);
-      setFormData(defaultFormData);
     } else {
       setFailedText(res?.message || "An error occurred. Please try again.");
     }
@@ -41,9 +44,19 @@ const NewPermission = () => {
     setLoading(false);
   };
 
+  useEffect(() => {
+    if (data) {
+      setFormData({
+        permission_name: data.permission_name,
+      });
+    }
+  }, [data]);
+
+  if (!data) return <Loader />;
+
   return (
     <form onSubmit={handleSubmit} className="w-full flex flex-col gap-6 my-2">
-      <h1 className="text-xl font-semibold text-gray-800">Add Permission</h1>
+      <h1 className="text-xl font-semibold text-gray-800">Edit Permission</h1>
 
       <div className="grid grid-cols-1 gap-y-4 text-left">
         <div className="flex flex-col gap-2">
@@ -91,12 +104,10 @@ const NewPermission = () => {
           isOpen={successModalStatus}
           closeModal={() => setSuccessModalStatus(false)}
           title="Success!"
-          text="Permission added successfully"
+          text="Permission updated successfully"
           link={"/admin/permissions"}
         />
       )}
     </form>
   );
-};
-
-export default NewPermission;
+}

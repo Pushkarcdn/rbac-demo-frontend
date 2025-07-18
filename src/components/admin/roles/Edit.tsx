@@ -2,38 +2,41 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import useFetch from "@/hooks/useFetch";
 import hitApi from "@/lib/axios";
 import Gamification from "@/components/modals/Gamification";
 import { PrimaryButton, SecondaryOutlineButton } from "@/components/ui/Buttons";
+import Loader from "@/components/ui/Loader";
 
-const NewPermission = () => {
+export default function EditComponent({ id }: { id: string }) {
   const [loading, setLoading] = useState(false);
   const [failedText, setFailedText] = useState("");
   const [successModalStatus, setSuccessModalStatus] = useState(false);
 
   const defaultFormData = {
-    permission_name: "",
+    role_name: "",
   };
 
   const [formData, setFormData] = useState(defaultFormData);
 
+  const { data } = useFetch(`/roles/${id}`) as any;
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (!formData.permission_name) {
-      setFailedText("Permission name is required! Please fill in the field.");
+    if (!formData.role_name) {
+      setFailedText("Role name is required! Please fill in the field.");
       return;
     }
 
     setLoading(true);
     setFailedText("");
 
-    const res = await hitApi("/permissions", "POST", formData);
+    const res = await hitApi(`/roles/${id}`, "PUT", formData);
 
     if (res?.success) {
       setSuccessModalStatus(true);
-      setFormData(defaultFormData);
     } else {
       setFailedText(res?.message || "An error occurred. Please try again.");
     }
@@ -41,26 +44,36 @@ const NewPermission = () => {
     setLoading(false);
   };
 
+  useEffect(() => {
+    if (data) {
+      setFormData({
+        role_name: data.role_name,
+      });
+    }
+  }, [data]);
+
+  if (!data) return <Loader />;
+
   return (
     <form onSubmit={handleSubmit} className="w-full flex flex-col gap-6 my-2">
-      <h1 className="text-xl font-semibold text-gray-800">Add Permission</h1>
+      <h1 className="text-xl font-semibold text-gray-800">Edit Role</h1>
 
       <div className="grid grid-cols-1 gap-y-4 text-left">
         <div className="flex flex-col gap-2">
-          <label htmlFor="permission_name" className="text-base">
-            Permission Name <span className="text-red-500 text-sm">*</span>
+          <label htmlFor="role_name" className="text-base">
+            Role Name <span className="text-red-500 text-sm">*</span>
           </label>
           <input
             type="text"
-            name="permission_name"
-            value={formData.permission_name}
+            name="role_name"
+            value={formData.role_name}
             onChange={(e) => {
               setFormData({
                 ...formData,
-                permission_name: e.target.value,
+                role_name: e.target.value,
               });
             }}
-            placeholder="Enter permission name"
+            placeholder="Enter role name"
             className="px-5 border rounded-md outline-gray-400 py-3 w-full"
           />
         </div>
@@ -70,7 +83,7 @@ const NewPermission = () => {
         <SecondaryOutlineButton
           title="Cancel"
           className="!px-10"
-          link="/admin/permissions"
+          link="/admin/roles"
         />
         <PrimaryButton
           title={loading ? "Saving..." : "Save"}
@@ -91,12 +104,10 @@ const NewPermission = () => {
           isOpen={successModalStatus}
           closeModal={() => setSuccessModalStatus(false)}
           title="Success!"
-          text="Permission added successfully"
-          link={"/admin/permissions"}
+          text="Role updated successfully"
+          link={"/admin/roles"}
         />
       )}
     </form>
   );
-};
-
-export default NewPermission;
+}

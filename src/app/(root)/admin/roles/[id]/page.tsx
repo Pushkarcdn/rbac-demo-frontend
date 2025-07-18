@@ -1,12 +1,8 @@
-import EditComponenet from "@/components/admin/finance-records/Edit";
+import EditComponent from "@/components/admin/roles/Edit";
 
-const EditTestimonial = async ({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) => {
+const EditRole = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
-  return <EditComponenet id={id} />;
+  return <EditComponent id={id} />;
 };
 
-export default EditTestimonial;
+export default EditRole;
