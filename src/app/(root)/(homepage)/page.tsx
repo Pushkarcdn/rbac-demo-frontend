@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import Loader from "@/components/ui/Loader";
@@ -35,7 +34,7 @@ export default function Homepage() {
     } else {
       router.push("/auth/sign-in");
     }
-  }, [userData]);
+  }, [userData, isFinished]);
 
   return (
     <>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, {
   Method,
   RawAxiosRequestHeaders,
@@ -112,13 +113,8 @@ const hitApi = async (
     })) as AxiosResponse;
 
     return await response?.data;
-  } catch (error: unknown) {
-    if (error && typeof error === "object" && "response" in error) {
-      return (
-        (error as { response?: { data: unknown } })?.response?.data || error
-      );
-    }
-    return error;
+  } catch (error: any) {
+    return error?.response?.data || error;
   }
 };
 

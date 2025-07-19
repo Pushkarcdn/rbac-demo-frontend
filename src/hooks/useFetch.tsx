@@ -34,8 +34,12 @@ const useFetch = <T,>(
         responseType,
         timeout
       );
-      // console.info("response", response);
-      setData(response?.data);
+
+      if (!response?.success) {
+        setErr(response?.message);
+      } else {
+        setData(response?.data);
+      }
     } catch (error: any) {
       if (axios.isCancel(error)) {
         console.error("Request cancelled 'useFetch'");
