@@ -2,6 +2,7 @@
 import React from "react";
 import { formatDate } from "@/utils/dateFormatters";
 import ActionCard from "./ActionCard";
+import { formatCamelCase } from "@/utils/stringFormatters";
 
 const All = ({ data, refetch }: any) => {
   return (
@@ -11,13 +12,11 @@ const All = ({ data, refetch }: any) => {
           <table className="rounded-lg w-full ">
             <thead>
               <tr className="bg-[#f9fafb] rounded-xl text-sm text-nowrap">
-                <th className="px-4 py-3 text-left font-medium">Full Name</th>
-                <th className="px-4 py-3 text-left font-medium">Username</th>
-                <th className="px-4 py-3 text-left font-medium">Email</th>
-                <th className="px-4 py-3 text-left font-medium">Role</th>
-                <th className="px-4 py-3 text-left font-medium">
-                  Registered on
-                </th>
+                <th className="px-4 py-3 text-left font-medium">Category</th>
+                <th className="px-4 py-3 text-left font-medium">Amount</th>
+                <th className="px-4 py-3 text-left font-medium">Method</th>
+                <th className="px-4 py-3 text-left font-medium">Status</th>
+                <th className="px-4 py-3 text-left font-medium">Date</th>
                 <th className="px-8 py-3 text-center font-medium">Action</th>
               </tr>
             </thead>
@@ -25,23 +24,23 @@ const All = ({ data, refetch }: any) => {
               {data?.map((item: any, index: number) => (
                 <tr key={index} className="hover:bg-gray-50 transition-all">
                   <td className="border-t border-gray-300 px-4 py-5 text-left text-sm text-gray-700 min-w-44">
-                    {item?.full_name}
-                  </td>
-
-                  <td className="border-t border-gray-300 px-4 py-5 text-left text-sm text-gray-700">
-                    {item?.username}
+                    {item?.category}
                   </td>
 
                   <td className="border-t border-gray-300 px-4 py-5 text-left text-sm text-gray-500">
-                    {item?.email}
+                    {item?.amount}
                   </td>
 
                   <td className="border-t border-gray-300 px-4 py-5 text-left text-sm text-gray-500">
-                    {item?.role_id?.role_name}
+                    {item?.payment_method}
+                  </td>
+
+                  <td className="border-t border-gray-300 px-4 py-5 text-left text-sm text-gray-500 overflow-hidden whitespace-nowrap text-ellipsis">
+                    {formatCamelCase(item?.payment_status)}
                   </td>
 
                   <td className="border-t border-gray-300 px-4 py-5 text-left text-sm text-gray-500 text-nowrap">
-                    {formatDate(item?.createdAt, "long")}
+                    {formatDate(item?.date, "long")}
                   </td>
 
                   <td className="border-t border-gray-300 py-5">
@@ -56,7 +55,7 @@ const All = ({ data, refetch }: any) => {
         {data?.length === 0 && (
           <div className="flex justify-center items-center h-96 w-full">
             <h1 className="text-xl font-semibold text-gray-500">
-              No users found
+              No finance records found
             </h1>
           </div>
         )}

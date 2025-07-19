@@ -7,27 +7,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { getFileUrl } from "@/config";
 import { useAuth } from "@/contexts/AuthContext";
-import { GoHomeFill } from "react-icons/go";
-
-const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => (
-  <div className="space-y-2">
-    <span
-      className={`block w-5 h-0.5 bg-gray-600 transition-all duration-300 ${
-        isOpen ? "rotate-45 translate-y-2" : ""
-      }`}
-    ></span>
-    <span
-      className={`block w-5 h-0.5 bg-gray-600 transition-all duration-300 ${
-        isOpen ? "opacity-0" : ""
-      }`}
-    ></span>
-    <span
-      className={`block w-5 h-0.5 bg-gray-600 transition-all duration-300 ${
-        isOpen ? "-rotate-45 -translate-y-2" : ""
-      }`}
-    ></span>
-  </div>
-);
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -86,25 +65,14 @@ export default function Navbar() {
       className={`bg-white bg-opacity-80 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-200`}
     >
       <div className="px-3 sm:px-8 py-4 flex items-center justify-between">
-        <Link href="/admin/inquiries">
-          <Image src="/logo-new.png" alt="Logo" width={120} height={44} />
+        <Link href="/employee">
+          <h2 className="text-xl font-semibold">Employee portal</h2>
         </Link>
 
         {userData && (
           <div className="flex items-center gap-2 select-none text-right">
-            <Link href={"/"} className="mr-10 mt-3 relative group">
-              <GoHomeFill
-                className="text-primary group-hover:scale-[1.05] group-hover:text-primary-dark transition"
-                size={27}
-              />
-              <div className="absolute hidden group-hover:block bg-white text-[#606060] text-sm rounded-lg py-1.5 px-4 z-10 text-nowrap shadow-lg -left-1/2">
-                Go to home
-              </div>
-            </Link>
             <div className="flex-col gap-0 hidden sm:flex">
-              <h4 className="font-medium">
-                {userData?.firstName + " " + userData?.lastName}
-              </h4>
+              <h4 className="font-medium">{userData?.full_name}</h4>
               <h4 className="text-xs">{userData?.email}</h4>
             </div>
             <Image
@@ -112,7 +80,7 @@ export default function Navbar() {
               alt={""}
               width={40}
               height={40}
-              className="rounded-full  w-auto aspect-square object-cover object-center"
+              className="rounded-full w-12 h-12 aspect-square object-cover object-center"
             />
           </div>
         )}

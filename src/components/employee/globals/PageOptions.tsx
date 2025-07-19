@@ -1,101 +1,21 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useAuth } from "@/contexts/AuthContext";
 import { HugeiconsIcon } from "@hugeicons/react";
-import {
-  BubbleChatQuestionIcon,
-  StarIcon,
-  Database01Icon,
-  MicrosoftAdminIcon,
-  LicenseDraftIcon,
-  Calendar02Icon,
-  CourseIcon,
-  PermanentJobIcon,
-  TeachingIcon,
-  InboxIcon,
-  Appointment01Icon,
-} from "@hugeicons/core-free-icons";
+import { InboxIcon } from "@hugeicons/core-free-icons";
 
 const data = [
   {
-    icon: (
-      <HugeiconsIcon
-        icon={BubbleChatQuestionIcon}
-        size={22}
-        strokeWidth={1.5}
-      />
-    ),
-    text: "Inquiries",
-    navigateTo: "/admin/inquiries",
-  },
-  {
     icon: <HugeiconsIcon icon={InboxIcon} size={22} strokeWidth={1.5} />,
-    text: "Scholarship Inquiries",
-    navigateTo: "/admin/scholarship-inquiries",
-  },
-  {
-    icon: (
-      <HugeiconsIcon icon={Appointment01Icon} size={22} strokeWidth={1.5} />
-    ),
-    text: "Mentor Bookings",
-    navigateTo: "/admin/bookings",
-  },
-  {
-    icon: <HugeiconsIcon icon={Calendar02Icon} size={22} strokeWidth={1.5} />,
-    text: "Events",
-    navigateTo: "/admin/events",
-  },
-  {
-    icon: <HugeiconsIcon icon={LicenseDraftIcon} size={22} strokeWidth={1.5} />,
-    text: "Blogs",
-    navigateTo: "/admin/blogs",
-  },
-  {
-    icon: <HugeiconsIcon icon={CourseIcon} size={22} strokeWidth={1.5} />,
-    text: "Programs",
-    navigateTo: "/admin/programs",
-  },
-  {
-    icon: <HugeiconsIcon icon={PermanentJobIcon} size={22} strokeWidth={1.5} />,
-    text: "Job profiles",
-    navigateTo: "/admin/job-profiles",
-  },
-  // {
-  //   icon: <HugeiconsIcon icon={Database01Icon} size={22} strokeWidth={1.5} />,
-  //   text: "Faqs",
-  //   navigateTo: "/admin/faqs",
-  // },
-  // {
-  //   icon: <HugeiconsIcon icon={StarIcon} size={22} strokeWidth={1.5} />,
-  //   text: "Testimonials",
-  //   navigateTo: "/admin/testimonials",
-  // },
-  {
-    icon: <HugeiconsIcon icon={TeachingIcon} size={22} strokeWidth={1.5} />,
-    text: "Mentor categories",
-    navigateTo: "/admin/mentor-categories",
-  },
-  {
-    icon: <HugeiconsIcon icon={TeachingIcon} size={22} strokeWidth={1.5} />,
-    text: "Mentors",
-    navigateTo: "/admin/mentor-accounts",
-  },
-  {
-    icon: (
-      <HugeiconsIcon icon={MicrosoftAdminIcon} size={22} strokeWidth={1.5} />
-    ),
-    text: "Admins",
-    navigateTo: "/admin/admin-accounts",
+    text: "Finance Records",
+    navigateTo: "/employee/finance-records",
   },
 ];
 
 const PageOptions = ({ close }: { close?: () => void }) => {
-  // NavItem component (unchanged)
   const NavItem = ({
     icon,
     text,
@@ -125,19 +45,9 @@ const PageOptions = ({ close }: { close?: () => void }) => {
     );
   };
 
-  const { userData } = useAuth();
-
-  const [filteredData, setFilteredData] = useState(data?.slice(0, -1));
-
-  useEffect(() => {
-    if (userData?.user?.userType === "superAdmin") {
-      setFilteredData(data);
-    }
-  }, [userData]);
-
   return (
     <>
-      {filteredData?.map((item, index) => (
+      {data?.map((item, index) => (
         <NavItem
           key={index}
           icon={item.icon}

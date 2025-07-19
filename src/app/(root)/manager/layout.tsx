@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import hitApi from "@/lib/axios";
 
-import Navbar from "@/components/admin/globals/Navbar";
-import Sidebar from "@/components/admin/globals/Sidebar";
-import MobileSidebar from "@/components/admin/globals/MobileSidebar";
+import Navbar from "@/components/manager/globals/Navbar";
+import Sidebar from "@/components/manager/globals/Sidebar";
+import MobileSidebar from "@/components/manager/globals/MobileSidebar";
+
 import Loader from "@/components/ui/Loader";
 
 export default function ManagerLayout({

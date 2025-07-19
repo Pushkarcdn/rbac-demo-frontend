@@ -33,6 +33,11 @@ const data = [
     text: "Permissions",
     navigateTo: "/admin/permissions",
   },
+  {
+    icon: <HugeiconsIcon icon={ShieldIcon} size={22} strokeWidth={1.5} />,
+    text: "Audit logs",
+    navigateTo: "/admin/audit-logs",
+  },
 ];
 
 const PageOptions = ({ close }: { close?: () => void }) => {
