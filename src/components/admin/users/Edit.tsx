@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -20,7 +19,7 @@ export default function EditComponent({ id }: { id: string }) {
     full_name: "",
     email: "",
     role_id: "",
-  };
+  } as any;
 
   const [formData, setFormData] = useState(defaultFormData);
   const [changePassword, setChangePassword] = useState(false);
