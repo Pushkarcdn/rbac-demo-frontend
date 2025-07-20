@@ -5,13 +5,18 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { InboxIcon } from "@hugeicons/core-free-icons";
+import { InboxIcon, MessageIcon } from "@hugeicons/core-free-icons";
 
 const data = [
   {
     icon: <HugeiconsIcon icon={InboxIcon} size={22} strokeWidth={1.5} />,
     text: "Finance Records",
     navigateTo: "/manager/finance-records",
+  },
+  {
+    icon: <HugeiconsIcon icon={MessageIcon} size={22} strokeWidth={1.5} />,
+    text: "Messaging",
+    navigateTo: "/manager/messaging",
   },
 ];
 

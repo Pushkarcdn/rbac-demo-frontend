@@ -10,6 +10,8 @@ import {
   UserIcon,
   ShieldUserIcon,
   ShieldIcon,
+  MessageIcon,
+  FileIcon,
 } from "@hugeicons/core-free-icons";
 
 const data = [
@@ -34,9 +36,14 @@ const data = [
     navigateTo: "/admin/permissions",
   },
   {
-    icon: <HugeiconsIcon icon={ShieldIcon} size={22} strokeWidth={1.5} />,
+    icon: <HugeiconsIcon icon={FileIcon} size={22} strokeWidth={1.5} />,
     text: "Audit logs",
     navigateTo: "/admin/audit-logs",
+  },
+  {
+    icon: <HugeiconsIcon icon={MessageIcon} size={22} strokeWidth={1.5} />,
+    text: "Messaging",
+    navigateTo: "/admin/messaging",
   },
 ];
 
