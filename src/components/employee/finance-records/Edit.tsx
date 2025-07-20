@@ -204,7 +204,7 @@ export default function EditComponent({ id }: { id: string }) {
           closeModal={() => setSuccessModalStatus(false)}
           title="Success!"
           text="Finance record updated successfully"
-          link={"/manager/finance-records"}
+          link={"/employee/finance-records"}
         />
       )}
     </form>
