@@ -8,6 +8,8 @@ env:
   SERVER_IP: ${{ secrets.SERVER_IP }}
   SSH_USER: ${{ secrets.SSH_USER }}
   SSH_KEY: ${{ secrets.SSH_KEY }}
+  APP_ENV: ${{ secrets.APP_ENV }}
+  PORT: 6000
   PROJECT_DIR: ~/projects/training-frontend
   PROJECT_NAME: training-frontend
 
@@ -33,7 +35,7 @@ jobs:
       - name: Install SSH key
         uses: shimataro/ssh-key-action@v2
         with:
-          key: ${{ secrets.SSH_KEY }}
+          key: ${{ env.SSH_KEY }}
           known_hosts: "just-a-placeholder-so-we-dont-get-errors"
 
       - name: Create deployment package
@@ -59,7 +61,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{ env.SSH_USER }}@${{ env.SERVER_IP }} << 'EOF'
           cd ${{ env.PROJECT_DIR }}
-          echo "${{ secrets.APP_ENV }}" > .env
+          echo "APP_ENV=${{ env.APP_ENV }}" > .env
           EOF
 
       - name: Install dependencies and build
@@ -75,6 +77,6 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ env.SSH_USER }}@${{ env.SERVER_IP }} << 'EOF'
           cd ${{ env.PROJECT_DIR }}
           pm2 delete ${{ env.PROJECT_NAME }} || true
-          pm2 start npm --name ${{ env.PROJECT_NAME }} -- start -- -p 3000
+          pm2 start npm --name ${{ env.PROJECT_NAME }} -- start -- -p ${{ env.PORT }}
           pm2 save
           EOF
