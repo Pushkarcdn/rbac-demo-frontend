@@ -11,6 +11,7 @@ import { SecondaryOutlineButton } from "@/components/ui/Buttons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { EyeIcon } from "@hugeicons/core-free-icons";
 import { Modal } from "antd";
+import { formatCamelCase } from "@/utils/stringFormatters";
 
 export default function AuditLogs() {
   const [searchTerm, setSearchTerm] = useState("") as any;
@@ -21,6 +22,7 @@ export default function AuditLogs() {
     data: auditLogs,
     loading: auditLogsLoading,
     fetchData: refetch,
+    err,
   } = useFetch("/audit-logs") as any;
 
   const [filtered, setFiltered] = useState() as any;
@@ -28,10 +30,14 @@ export default function AuditLogs() {
   useEffect(() => {
     if (auditLogs) {
       setFiltered(
-        auditLogs?.filter((item: any) =>
-          item?.user_id?.full_name
-            ?.toLowerCase()
-            .includes(searchTerm?.toLowerCase().trim())
+        auditLogs?.filter(
+          (item: any) =>
+            item?.event_type
+              ?.toLowerCase()
+              .includes(searchTerm?.toLowerCase().trim()) ||
+            item?.resource
+              ?.toLowerCase()
+              .includes(searchTerm?.toLowerCase().trim())
         )
       );
     }
@@ -61,7 +67,13 @@ export default function AuditLogs() {
         />
       </div>
       {auditLogsLoading && <Loader />}
-      {!auditLogsLoading && (
+      {err ? (
+        <div className="w-full my-48 flex items-center justify-center text-gray-400 font-semibold text-xl">
+          {err === "unauthorized"
+            ? "You are not authorized to access this resource!"
+            : formatCamelCase(err)}
+        </div>
+      ) : (
         <All
           data={filtered}
           viewDetails={viewDetails}
@@ -76,12 +88,15 @@ export default function AuditLogs() {
               Audit Log Details
             </h1>
             {Object?.entries(viewDetails?.details)?.map(
-              ([key, value]: any, index: number) => (
-                <div key={index}>
-                  <h2 className="text-lg font-semibold text-gray-500">{key}</h2>
-                  <p className="text-sm text-gray-500">{value?.toString()}</p>
-                </div>
-              )
+              ([key, value]: any, index: number) =>
+                typeof value === "string" && (
+                  <div key={index}>
+                    <h2 className="text-lg font-semibold text-gray-500">
+                      {key}
+                    </h2>
+                    <p className="text-sm text-gray-500">{value?.toString()}</p>
+                  </div>
+                )
             )}
           </div>
         </Modal>
@@ -112,7 +127,7 @@ const All = ({ data, viewDetails, setViewDetails }: any) => {
               {data?.map((item: any, index: number) => (
                 <tr key={index} className="hover:bg-gray-50 transition-all">
                   <td className="border-t border-gray-300 px-4 py-5 text-left text-sm text-gray-700 min-w-44">
-                    {item?.user_id?.full_name}
+                    {item?.user_id?.full_name || "Unknown"}
                   </td>
 
                   <td className="border-t border-gray-300 px-4 py-5 text-left text-sm text-gray-500 text-nowrap">

@@ -10,6 +10,7 @@ import useFetch from "@/hooks/useFetch";
 import Link from "next/link";
 import Chip from "@/components/ui/Chip";
 import { SecondaryOutlineButton } from "@/components/ui/Buttons";
+import { formatCamelCase } from "@/utils/stringFormatters";
 
 export default function Applications() {
   const [searchTerm, setSearchTerm] = useState("") as any;
@@ -19,6 +20,7 @@ export default function Applications() {
     data: financeRecords,
     loading: financeRecordsLoading,
     fetchData: refetch,
+    err,
   } = useFetch("/finance-records") as any;
 
   const [filtered, setFiltered] = useState() as any;
@@ -63,7 +65,15 @@ export default function Applications() {
         />
       </div>
       {financeRecordsLoading && <Loader />}
-      {!financeRecordsLoading && tabs[currentTab]}
+      {err ? (
+        <div className="w-full my-48 flex items-center justify-center text-gray-400 font-semibold text-xl">
+          {err === "unauthorized"
+            ? "You are not authorized to access this resource!"
+            : formatCamelCase(err)}
+        </div>
+      ) : (
+        tabs[currentTab]
+      )}
     </div>
   );
 }
