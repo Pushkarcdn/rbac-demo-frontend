@@ -9,7 +9,7 @@ env:
   SSH_USER: ${{ secrets.SSH_USER }}
   SSH_KEY: ${{ secrets.SSH_KEY }}
   APP_ENV: ${{ secrets.APP_ENV }}
-  PORT: 6000
+  PORT: 6002
   PROJECT_DIR: ~/projects/training-frontend
   PROJECT_NAME: training-frontend
 
