@@ -20,7 +20,7 @@ const ActionCard = ({ id, refetch }: any) => {
   return (
     <div className="flex justify-center cursor-pointer text-sm font-semibold">
       <div className="flex items-start gap-6">
-        <Link href={`/manager/finance-records/${id}`}>
+        <Link href={`/employee/finance-records/${id}`}>
           <FiEdit3 size={20} color="#0295a9" className="cursor-pointer" />
         </Link>
 

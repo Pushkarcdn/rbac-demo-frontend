@@ -65,7 +65,7 @@ export default function Navbar() {
       className={`bg-white bg-opacity-80 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-200`}
     >
       <div className="px-3 sm:px-8 py-4 flex items-center justify-between">
-        <Link href="/admin">
+        <Link href="/manager">
           <h2 className="text-xl font-semibold">Manager portal</h2>
         </Link>
 

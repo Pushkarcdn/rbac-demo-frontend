@@ -182,7 +182,7 @@ export default function EditComponent({ id }: { id: string }) {
         <SecondaryOutlineButton
           title="Cancel"
           className="!px-10"
-          link="/manager/finance-records"
+          link="/employee/finance-records"
         />
         <PrimaryButton
           title={loading ? "Saving..." : "Save"}
