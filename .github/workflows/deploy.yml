@@ -28,10 +28,10 @@ jobs:
           cache: "npm"
 
       # ONLY FOR FASTER DEPLOYMENT
-      # - name: Install dependencies and build locally
-      #   run: |
-      #     npm ci
-      #     npm run build
+      - name: Install dependencies and build locally
+        run: |
+          npm ci
+          npm run build
 
       - name: Install SSH key
         uses: shimataro/ssh-key-action@v2
