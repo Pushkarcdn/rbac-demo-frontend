@@ -12,6 +12,8 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { EyeIcon } from "@hugeicons/core-free-icons";
 import { Modal } from "antd";
 import { formatCamelCase } from "@/utils/stringFormatters";
+import config from "@/config";
+import { io } from "socket.io-client";
 
 export default function AuditLogs() {
   const [searchTerm, setSearchTerm] = useState("") as any;
@@ -42,6 +44,29 @@ export default function AuditLogs() {
       );
     }
   }, [auditLogs, searchTerm]);
+
+  useEffect(() => {
+    // create a websocket connection and listen for any messages
+    const socket = io(config.BE_URL || "", {
+      withCredentials: true,
+    });
+
+    socket.on("connect", () => {
+      console.info(
+        "Connected to WebSocket server for live permission updates!"
+      );
+    });
+
+    socket.on("disconnect", () => {
+      console.info(
+        "Disconnected from WebSocket server for live permission updates!"
+      );
+    });
+
+    socket.on("permissions-updated", () => {
+      refetch();
+    });
+  }, []);
 
   return (
     <div className="flex flex-col gap-4">
