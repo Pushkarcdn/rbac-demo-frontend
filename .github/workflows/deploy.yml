@@ -2,7 +2,7 @@ name: Training Frontend Deployment - Production
 
 on:
   push:
-    branches: [production]
+    branches: [main]
 
 env:
   SERVER_IP: ${{ secrets.SERVER_IP }}
